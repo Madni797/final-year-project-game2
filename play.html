@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Play — Lahore Speedster Ride</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link rel="shortcut icon" href="TemplateData/favicon.ico">
+
+<style>
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    html, body{
+        width:100%;
+        height:100%;
+        background:#0b0b0b;
+        color:#fff;
+        font-family:'Poppins',sans-serif;
+        overflow:hidden;
+    }
+
+    /* ================= TOP BAR ================= */
+
+    .play-topbar{
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:70px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:0 4%;
+        background:rgba(10,10,10,.75);
+        backdrop-filter:blur(10px);
+        z-index:20;
+    }
+
+    .play-logo{
+        display:flex;
+        align-items:center;
+        gap:12px;
+        text-decoration:none;
+        color:#fff;
+    }
+
+    .play-logo img{
+        width:44px;
+    }
+
+    .play-logo span{
+        font-family:'Orbitron',sans-serif;
+        font-weight:700;
+        font-size:15px;
+        letter-spacing:.5px;
+    }
+
+    .back-home{
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        padding:10px 22px;
+        border-radius:50px;
+        text-decoration:none;
+        font-weight:600;
+        font-size:14px;
+        background:transparent;
+        border:2px solid #F9B233;
+        color:#F9B233;
+        transition:.3s;
+    }
+
+    .back-home:hover{
+        background:#F9B233;
+        color:#111;
+    }
+
+    /* ================= GAME STAGE ================= */
+
+    .game-stage{
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:radial-gradient(circle at center, #141414 0%, #060606 100%);
+    }
+
+    #unity-container{
+        position:relative;
+        width:100%;
+        height:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    #unity-canvas{
+        background:#0b0b0b;
+        border-radius:6px;
+        box-shadow:0 0 60px rgba(14,139,61,.25);
+    }
+
+    #unity-container.unity-desktop #unity-canvas{
+        width:90vw;
+        height:80vh;
+        max-width:1280px;
+        max-height:720px;
+    }
+
+    #unity-container.unity-mobile{
+        width:100%;
+        height:100%;
+    }
+
+    #unity-container.unity-mobile #unity-canvas{
+        width:100%;
+        height:100%;
+        border-radius:0;
+    }
+
+    /* ================= LOADING SCREEN ================= */
+
+    #unity-loading-bar{
+        position:absolute;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        gap:22px;
+        z-index:10;
+    }
+
+    #unity-logo-text{
+        font-family:'Orbitron',sans-serif;
+        font-weight:800;
+        font-size:26px;
+        letter-spacing:1px;
+        text-align:center;
+        background:linear-gradient(90deg,#0E8B3D,#F9B233);
+        -webkit-background-clip:text;
+        background-clip:text;
+        color:transparent;
+    }
+
+    #unity-loading-bar .loading-sub{
+        font-size:13px;
+        color:#aaa;
+        text-align:center;
+        margin-top:-14px;
+        letter-spacing:.5px;
+    }
+
+    #unity-progress-bar-empty{
+        width:280px;
+        height:10px;
+        border-radius:20px;
+        background:rgba(255,255,255,.08);
+        overflow:hidden;
+        border:1px solid rgba(255,255,255,.15);
+    }
+
+    #unity-progress-bar-full{
+        width:0%;
+        height:100%;
+        border-radius:20px;
+        background:linear-gradient(90deg,#0E8B3D,#F9B233);
+        transition:width .25s ease-out;
+    }
+
+    /* ================= WARNING / FOOTER ================= */
+
+    #unity-warning{
+        position:absolute;
+        top:90px;
+        left:50%;
+        transform:translateX(-50%);
+        z-index:30;
+        max-width:80%;
+        text-align:center;
+        font-size:14px;
+    }
+
+    #unity-footer{
+        position:fixed;
+        bottom:16px;
+        right:20px;
+        z-index:20;
+        display:flex;
+        align-items:center;
+        gap:14px;
+    }
+
+    #unity-fullscreen-button{
+        width:42px;
+        height:42px;
+        border-radius:50%;
+        background:rgba(255,255,255,.08);
+        border:1px solid rgba(255,255,255,.2);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        cursor:pointer;
+        color:#fff;
+        font-size:16px;
+        transition:.3s;
+    }
+
+    #unity-fullscreen-button:hover{
+        background:#0E8B3D;
+        border-color:#0E8B3D;
+    }
+
+    @media (max-width:700px){
+        .play-logo span{ display:none; }
+        .back-home span{ display:none; }
+        .back-home{ padding:10px 14px; }
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ================= TOP BAR ================= -->
+
+<div class="play-topbar">
+
+    <a href="web.html" class="play-logo">
+        <img src="logo.png" alt="Logo">
+        <span>LAHORE SPEEDSTER RIDE</span>
+    </a>
+
+    <a href="web.html" class="back-home">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Back to Home</span>
+    </a>
+
+</div>
+
+<!-- ================= GAME STAGE ================= -->
+
+<div class="game-stage">
+
+    <div id="unity-container" class="unity-desktop">
+
+        <canvas id="unity-canvas" tabindex="-1"></canvas>
+
+        <div id="unity-loading-bar">
+            <div id="unity-logo-text">LAHORE SPEEDSTER RIDE</div>
+            <div class="loading-sub" id="unity-loading-status">Loading game… 0%</div>
+            <div id="unity-progress-bar-empty">
+                <div id="unity-progress-bar-full"></div>
+            </div>
+        </div>
+
+        <div id="unity-warning"></div>
+
+        <div id="unity-footer">
+            <div id="unity-fullscreen-button" title="Fullscreen">
+                <i class="fa-solid fa-expand"></i>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    var container = document.querySelector("#unity-container");
+    var canvas = document.querySelector("#unity-canvas");
+    var loadingBar = document.querySelector("#unity-loading-bar");
+    var progressBarFull = document.querySelector("#unity-progress-bar-full");
+    var loadingStatus = document.querySelector("#unity-loading-status");
+    var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+    var warningBanner = document.querySelector("#unity-warning");
+
+    function unityShowBanner(msg, type) {
+        function updateBannerVisibility() {
+            warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        }
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background:#c0392b; padding:10px 18px; border-radius:8px; margin-top:6px;';
+        else {
+            if (type == 'warning') div.style = 'background:#F9B233; color:#111; padding:10px 18px; border-radius:8px; margin-top:6px;';
+            setTimeout(function() {
+                warningBanner.removeChild(div);
+                updateBannerVisibility();
+            }, 5000);
+        }
+        updateBannerVisibility();
+    }
+
+    // Build config — matches the exported Unity WebGL build in /Build
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/game.loader.js";
+    var config = {
+        dataUrl: buildUrl + "/game.data",
+        frameworkUrl: buildUrl + "/game.framework.js",
+        codeUrl: buildUrl + "/game.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "LahoreTransport",
+        productVersion: "2.0",
+        showBanner: unityShowBanner,
+    };
+
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+    } else {
+        container.className = "unity-desktop";
+    }
+
+    loadingBar.style.display = "flex";
+
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+            var pct = Math.round(100 * progress);
+            progressBarFull.style.width = pct + "%";
+            loadingStatus.textContent = "Loading game… " + pct + "%";
+        }).then((unityInstance) => {
+            loadingBar.style.display = "none";
+            fullscreenButton.onclick = () => {
+                unityInstance.SetFullscreen(1);
+            };
+        }).catch((message) => {
+            unityShowBanner(message, 'error');
+        });
+    };
+
+    document.body.appendChild(script);
+
+</script>
+
+</body>
+</html>

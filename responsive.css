@@ -1,0 +1,178 @@
+/* ==================================
+   LARGE TABLETS
+================================== */
+
+@media(max-width:992px){
+
+    .navbar{
+        flex-direction:column;
+        height:auto;
+        padding:20px 0;
+    }
+
+    .navbar ul{
+        margin-top:15px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .navbar ul li{
+        margin:10px 15px;
+    }
+
+    .hero h1{
+        font-size:48px;
+    }
+
+    .hero h2{
+        font-size:24px;
+    }
+
+    section{
+        padding:80px 6%;
+    }
+
+    section h2{
+        font-size:34px;
+    }
+
+}
+
+/* ==================================
+   TABLETS
+================================== */
+
+@media(max-width:768px){
+
+    .hero{
+        height:auto;
+        padding-top:140px;
+        padding-bottom:80px;
+    }
+
+    .hero h1{
+        font-size:38px;
+        line-height:1.3;
+    }
+
+    .hero h2{
+        font-size:22px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .buttons{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .btn{
+        width:260px;
+        justify-content:center;
+    }
+
+    .container{
+        flex-direction:column;
+    }
+
+    .right{
+        justify-content:center;
+    }
+
+    .feature-grid,
+    .vehicle-grid,
+    .team-grid{
+        grid-template-columns:1fr 1fr;
+        gap:20px;
+    }
+
+    .unity-container{
+        height:400px;
+    }
+
+}
+
+/* ==================================
+   MOBILE
+================================== */
+
+@media(max-width:576px){
+
+    .logo img{
+        width:140px;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .hero h2{
+        font-size:18px;
+    }
+
+    .hero p{
+        font-size:14px;
+        line-height:1.7;
+    }
+
+    section{
+        padding:70px 5%;
+    }
+
+    section h2{
+        font-size:28px;
+    }
+
+    .feature-grid,
+    .vehicle-grid,
+    .team-grid{
+        grid-template-columns:1fr;
+    }
+
+    .image-slot{
+        width:130px;
+        height:130px;
+    }
+
+    .vehicle-image{
+        height:180px;
+    }
+
+    .photo{
+        width:130px;
+        height:130px;
+    }
+
+    .unity-container{
+        height:300px;
+    }
+
+    .footer{
+        text-align:center;
+    }
+
+}
+
+/* ==================================
+   EXTRA SMALL DEVICES
+================================== */
+
+@media(max-width:400px){
+
+    .hero h1{
+        font-size:26px;
+    }
+
+    .hero h2{
+        font-size:16px;
+    }
+
+    .btn{
+        width:220px;
+        padding:14px 20px;
+        font-size:14px;
+    }
+
+}
